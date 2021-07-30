@@ -29,7 +29,7 @@ function bar(name, age) {
 }
 
 bar.prototype.friend = 'kevin';
-
+4
 var bindFoo = bar.myBind(foo, 'daisy');
 
 var obj = new bindFoo('18');
