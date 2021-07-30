@@ -3,6 +3,6 @@ const person = {
     power:10,
     intellegence:10,
     hp:500,
-    mp:200,
+    mp:300,
 }
 console.log(person);
