@@ -1,15 +1,43 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
 </head>
+
 <body>
-    <input type="text" name="" id="input">
-    <script>
-        const input = document.querySelector('#input')
-    </script>
+  <input type="text" name="" id="input">
+  <button id="btn">看看input的值</button>
+  <script>
+    const input = document.querySelector('#input')
+    const btn = document.querySelector('#btn')
+    const a = '我是参数1'
+    const b = '我是参数2'
+    function fn(a,b) {
+      console.log(input.value, a, b);
+    }
+    function debounce(fn, delay) {
+      let timer
+      console.log('我还没click就执行了');
+      return function () {
+        let context = this
+        let _args = arguments  //要么在外面定义一个arguments传进来，要么就暂时先这样写，后续用bind修补参数
+        if (timer) {
+          clearTimeout(timer);
+          timer = null;
+        }
+        timer = setTimeout(function () {
+          fn.apply(context, _args)
+        }, delay)
+      }//每次点击其实只是触发了return的这个函数，那么这个函数的timer 引用的是外层作用域的timer，无论你触发多少次这个函数，你使用的timer都是同一个timer
+    }
+    const btnDebounce = debounce(fn,1000).bind(btn,a,b)//解决了传参问题
+    btn.addEventListener('click', btnDebounce)
+    
+  </script>
 </body>
+
 </html>
