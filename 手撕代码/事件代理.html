@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <ul class="daili" id="woshidaili">
+    <li id="1">Aaa</li>
+    <li id="2">ASDAS</li>
+    <li id="3">ASD</li>
+    <li id="4">ASD</li>
+    <li id="5">ASD</li>
+    <li id="6">ASDASD</li>
+    <li id="aa">ASDASDASD</li>
+    <img src="javascript:alert('XSS')">
+  </ul>
+
+  <script>
+    const daili = document.querySelector('.daili')
+    const name = "<img src='x' onerror='alert(1)'>";//利用innerHTML进行xss攻击
+    const li7 = document.querySelector('#aa')
+    li7.textContent = name; // shows the alert
+    daili.addEventListener('click', function (e) {
+      console.log(e.target.id);//target是触发事件的对象，众所周知事件无处不在，根据事件冒泡的特性，最先触发的事件是li 的click，只不过没有监听
+      console.log(e.currentTarget.id);
+    })
+  </script>
+</body>
+
+</html>

@@ -6,21 +6,62 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <style>
-        .container{
-            width: 400px;
-            height: 200px;
+        .btn{
             display: flex;
-            justify-content: space-between;
+            justify-content: left;
+        }
+        .btn button{
+          width: 50px;
+          height: 50px;
+          display: block;
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <div>热门</div>
-        <div>热门</div>
-        <div>热门</div>
-        <div>热门</div>
-        <div>热门</div>
+    <div id="app">
+        <div v-for="(item,index) in pageData" :key="index">{{item}}</div>
+        <div class="btn">
+          <div v-for="n in countButton">
+            <button @click="changePage(n)">{{n}}</button>
+          </div>
+        </div>
+        
     </div>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+    <script>
+      var vm = new Vue({
+        el:'#app',
+        data(){
+          return{
+            arr:[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15],
+            pageData:[],
+            pageCurrent:1,
+            countButton:0
+          }
+        },
+        methods:{
+          changePage(cur,e){
+            this.pageCurrent = cur
+            this.pageData = []
+            for(let i=(this.pageCurrent-1)*5;i<this.pageCurrent*5;i++){
+              this.pageData.push(this.arr[i])
+            }
+            console.log(cur,e)
+          },
+          pageInit(){
+            this.pageData = []
+            for(let i=(this.pageCurrent-1)*5;i<this.pageCurrent*5;i++){
+              this.pageData.push(this.arr[i])
+            }
+            this.countButton = Math.ceil(this.arr.length/5)
+          }
+        },
+        created(){
+          this.pageInit()
+        }
+
+
+})
+    </script>
 </body>
 </html>
